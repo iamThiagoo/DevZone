@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108274362238",
+    "project_id": "devzone-ba679",
+    "storage_bucket": "devzone-ba679.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108274362238:android:4568637ae853b5e55d352f",
+        "android_client_info": {
+          "package_name": "br.com.devzone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjDe1jriWs1Do73EAAEZtJSXrnUxnDEBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
