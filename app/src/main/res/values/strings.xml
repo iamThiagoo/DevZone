@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">DevZone</string>
     <string name="btn_registrar">Registrar-se</string>
+    <string name="btn_entrar_login">Entrar</string>
     <string name="txt_entrar">Entrar</string>
+    <string name="txt_email_login">E-mail</string>
+    <string name="txt_senha_login">Senha</string>
 </resources>

@@ -23,7 +23,7 @@
 
         <ImageView
             android:layout_width="300dp"
-            android:layout_height="200dp"
+            android:layout_height="74dp"
             android:src="@drawable/logo" />
 
         <Space
@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:text="@string/txt_entrar"
             android:textAlignment="center"
             android:textColor="@color/white"

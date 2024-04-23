@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(intent);
+                finish();
             }
         }, 2000); // 2000ms = 2 segundos
     }
