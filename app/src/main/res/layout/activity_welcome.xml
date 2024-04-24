@@ -41,14 +41,12 @@
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="@string/txt_entrar"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+        <Button
+            android:id="@+id/btnEntrar"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="@string/btn_entrar" />
 
 
     </LinearLayout>
