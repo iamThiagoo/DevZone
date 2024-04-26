@@ -41,9 +41,12 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Import the Firebase BoM
+    // Implementa o Firebase no projeto
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
 
-    // When using the BoM, don't specify versions in Firebase dependencies
+    // Implementa o Google Analytics no projeto
     implementation("com.google.firebase:firebase-analytics")
+
+    // Implementa o Material Design no projeto
+    implementation("com.google.android.material:material")
 }

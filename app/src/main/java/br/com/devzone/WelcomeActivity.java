@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class WelcomeActivity extends AppCompatActivity {
 
     Button btnEntrar;
+    Button btnRegistrarLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +22,23 @@ public class WelcomeActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_welcome);
 
+        // Ação para tela de Login
         btnEntrar = findViewById(R.id.btnEntrar);
-
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        // Ação para tela de Cadastro
+        btnRegistrarLogin = findViewById(R.id.btnRegistrarLogin);
+        btnRegistrarLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(i);
                 finish();
             }

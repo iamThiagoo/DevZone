@@ -28,26 +28,31 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="137dp" />
+            android:layout_height="33dp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnEntrar"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue"
-            android:text="@string/btn_registrar" />
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingVertical="12dp"
+            android:text="@string/btn_entrar"
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/btnEntrar"
+            android:id="@+id/btnRegistrarLogin"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@string/btn_entrar" />
-
+            android:backgroundTint="#11AC6A"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingVertical="12dp"
+            android:text="@string/btn_registrar"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

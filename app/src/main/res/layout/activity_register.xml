@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:id="@+id/imgLogin"
@@ -20,10 +21,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="95dp" />
-
         <ImageView
             android:layout_width="300dp"
             android:layout_height="63dp"
@@ -36,20 +33,39 @@
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
-            android:text="Faça login em sua conta"
+            android:paddingHorizontal="18dp"
+            android:paddingBottom="15sp"
+            android:text="Registre-se facilmente e aproveite os cursos."
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/txtNome"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CCCCCC"
+            android:drawablePadding="13dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:hint="Nome Completo"
+            android:inputType="textEmailAddress"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#DDDADA"
+            android:textSize="16sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="19dp" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/txtEmailLogin"
+            android:id="@+id/txtEmail"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#CCCCCC"
@@ -58,15 +74,15 @@
             android:hint="E-mail"
             android:inputType="textEmailAddress"
             android:textColor="@color/white"
-            android:textSize="17sp"
-            android:textColorHint="@color/white" />
+            android:textColorHint="#DDDADA"
+            android:textSize="16sp"/>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="30dp" />
 
         <EditText
-            android:id="@+id/txtSenhaLogin"
+            android:id="@+id/txtSenha"
             android:backgroundTint="#CCCCCC"
             android:layout_width="350dp"
             android:drawablePadding="13dp"
@@ -74,9 +90,9 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:inputType="textPassword"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:hint="Senha"
-            android:textColorHint="@color/white"/>
+            android:textColorHint="#DDDADA" />
 
         <Space
             android:layout_width="match_parent"
@@ -87,14 +103,14 @@
             android:layout_height="23dp" />
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegistrar"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
             android:paddingVertical="12dp"
             android:backgroundTint="@color/blue"
             android:textSize="16sp"
-            android:text="@string/btn_entrar_login" />
+            android:text="Registrar" />
 
         <Space
             android:layout_width="match_parent"
@@ -102,7 +118,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="182dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -110,29 +126,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Não tenho uma conta?"
+                android:text="Já possui uma conta?"
                 android:textAlignment="textEnd"
                 android:textSize="15sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/white" />
 
             <Button
-                android:id="@+id/btnRegistrarLogin"
+                android:id="@+id/btnLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_semibold"
-                android:textSize="15sp"
-                android:text="@string/btn_registrar"
-                android:paddingLeft="10sp"
+                android:text="Entrar"
                 android:textAlignment="textStart"
+                android:paddingLeft="10sp"
+                android:textSize="15sp"
                 android:textColor="#01FAAA" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
