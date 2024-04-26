@@ -3,6 +3,7 @@ package br.com.devzone;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
 
         Handler handler = new Handler();
@@ -23,7 +25,13 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+
+                // TODO: Verificar se usuário estiver logado ou não
+                //       Se estiver, envia para a home
+                //       Caso contrário, envia para o login
+
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+
                 startActivity(intent);
                 finish();
             }
