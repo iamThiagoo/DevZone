@@ -44,6 +44,8 @@ dependencies {
     // Implementa o Firebase no projeto
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
 
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+
     // Implementa o Google Analytics no projeto
     implementation("com.google.firebase:firebase-analytics")
 

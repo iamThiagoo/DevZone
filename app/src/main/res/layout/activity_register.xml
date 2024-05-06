@@ -22,22 +22,23 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="63dp"
+            android:layout_width="354dp"
+            android:layout_height="68dp"
             android:src="@drawable/logo" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="19dp" />
+            android:layout_height="11dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10sp"
             android:fontFamily="@font/poppins_semibold"
             android:paddingHorizontal="18dp"
             android:paddingBottom="15sp"
-            android:text="Registre-se facilmente e aproveite os cursos."
+            android:text="Registre-se facilmente e acesse os cursos."
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -45,7 +46,7 @@
 
         <EditText
             android:id="@+id/txtNome"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#CCCCCC"
             android:drawablePadding="13dp"
@@ -53,12 +54,15 @@
             android:hint="Nome Completo"
             android:inputType="textEmailAddress"
             android:textColor="#FFFFFF"
+            android:paddingVertical="15sp"
+            android:paddingHorizontal="10sp"
             android:textColorHint="#DDDADA"
-            android:textSize="16sp" />
+            android:layout_marginHorizontal="25sp"
+            android:textSize="15sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="19dp" />
+            android:layout_height="10sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -66,31 +70,37 @@
 
         <EditText
             android:id="@+id/txtEmail"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#CCCCCC"
             android:drawablePadding="13dp"
             android:fontFamily="@font/poppins_semibold"
             android:hint="E-mail"
+            android:paddingVertical="15sp"
+            android:paddingHorizontal="10sp"
             android:inputType="textEmailAddress"
             android:textColor="@color/white"
             android:textColorHint="#DDDADA"
-            android:textSize="16sp"/>
+            android:layout_marginHorizontal="25sp"
+            android:textSize="15sp"/>
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="10sp" />
 
         <EditText
             android:id="@+id/txtSenha"
             android:backgroundTint="#CCCCCC"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:drawablePadding="13dp"
             android:fontFamily="@font/poppins_semibold"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:inputType="textPassword"
-            android:textSize="16sp"
+            android:textSize="15sp"
+            android:paddingVertical="15sp"
+            android:paddingHorizontal="10sp"
+            android:layout_marginHorizontal="25sp"
             android:hint="Senha"
             android:textColorHint="#DDDADA" />
 
@@ -104,17 +114,18 @@
 
         <Button
             android:id="@+id/btnRegistrar"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
             android:paddingVertical="12dp"
+            android:layout_marginHorizontal="25sp"
             android:backgroundTint="@color/blue"
             android:textSize="16sp"
             android:text="Registrar" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="26dp" />
+            android:layout_height="14dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,10 +136,10 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.4"
                 android:text="Já possui uma conta?"
                 android:textAlignment="textEnd"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/white" />
 
@@ -141,8 +152,8 @@
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Entrar"
                 android:textAlignment="textStart"
-                android:paddingLeft="10sp"
-                android:textSize="15sp"
+                android:paddingLeft="5sp"
+                android:textSize="13sp"
                 android:textColor="#01FAAA" />
         </LinearLayout>
 
