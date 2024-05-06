@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             // Resgata os valores dos campos
             String nome = String.valueOf(txtNome.getText());
-            String email = String.valueOf(txtEmail.getText());
+            String email = String.valueOf(txtEmail.getText()).toLowerCase();
             String senha = String.valueOf(txtSenha.getText());
 
             // Resgata instância do Firebasee Auth
@@ -177,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Verifica se e-mail está vazio
         if (TextUtils.isEmpty(txtEmail.getText().toString())) {
-            txtEmail.setError("Por favor, insira seu !");
+            txtEmail.setError("Por favor, insira seu e-mail!");
             txtEmail.requestFocus();
             return false;
         }
