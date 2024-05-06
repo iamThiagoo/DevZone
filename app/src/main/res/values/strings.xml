@@ -1,8 +1,21 @@
 <resources>
+
+    <!-- General -->
     <string name="app_name">DevZone</string>
-    <string name="btn_registrar">Registrar-se</string>
-    <string name="btn_entrar_login">Entrar</string>
+    <string name="txt_fullname">Nome Completo</string>
+    <string name="txt_email">E-mail</string>
+    <string name="txt_password">Senha</string>
     <string name="btn_entrar">Entrar</string>
-    <string name="txt_email_login">E-mail</string>
-    <string name="txt_senha_login">Senha</string>
+
+    <!--Página de login -->
+    <string name="txt_title_login">Já estuda com a gente?</string>
+    <string name="txt_subtitle_login">Realize seu login e boa aula!</string>
+    <string name="txt_title_to_register">Não possui uma conta?</string>
+    <string name="btn_registrar">Registrar-se</string>
+
+    <!-- Página de cadastro -->
+    <string name="txt_title_register">Não possui uma conta?</string>
+    <string name="txt_subtitle_register">Registre-se facilmente e acesse os melhores cursos.</string>
+    <string name="txt_title_to_login">Já possui uma conta?</string>
+
 </resources>

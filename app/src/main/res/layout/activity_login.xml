@@ -25,23 +25,39 @@
             android:layout_height="95dp" />
 
         <ImageView
-            android:layout_width="354dp"
-            android:layout_height="68dp"
+            android:layout_width="250dp"
+            android:layout_height="63dp"
+            android:layout_gravity="left"
+            android:layout_marginStart="8sp"
+            android:layout_marginEnd="180sp"
             android:src="@drawable/logo" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="11dp" />
+            android:layout_height="5dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_semibold"
-            android:text="Faça login em sua conta"
-            android:textAlignment="center"
+            android:text="@string/txt_title_login"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:layout_marginHorizontal="25sp"
+            android:paddingHorizontal="5sp"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginHorizontal="25sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/txt_subtitle_login"
+            android:textColor="#01FAAA"
+            android:textSize="17sp"
+            android:paddingHorizontal="5sp"
             android:textStyle="bold" />
 
         <Space
@@ -55,7 +71,7 @@
             android:backgroundTint="#CCCCCC"
             android:drawablePadding="13dp"
             android:fontFamily="@font/poppins_semibold"
-            android:hint="E-mail"
+            android:hint="@string/txt_email"
             android:inputType="textEmailAddress"
             android:textColor="@color/white"
             android:paddingVertical="15sp"
@@ -82,7 +98,7 @@
             android:paddingHorizontal="10sp"
             android:layout_marginHorizontal="25sp"
             android:textColorHint="#DDDADA"
-            android:hint="Senha"
+            android:hint="@string/txt_password"
             />
 
         <Space
@@ -103,7 +119,7 @@
             android:layout_marginHorizontal="25sp"
             android:gravity="center"
             android:textSize="16sp"
-            android:text="@string/btn_entrar_login" />
+            android:text="@string/btn_entrar" />
 
         <Space
             android:layout_width="match_parent"
@@ -120,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.4"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Não possui uma conta?"
+                android:text="@string/txt_title_to_register"
                 android:textAlignment="textEnd"
                 android:textColor="@color/white"
                 android:textSize="13sp" />

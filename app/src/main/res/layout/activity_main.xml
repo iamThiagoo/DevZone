@@ -11,8 +11,9 @@
     tools:context=".MainActivity">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="300dp"
         android:layout_height="200dp"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/logo" />
 
 </LinearLayout>

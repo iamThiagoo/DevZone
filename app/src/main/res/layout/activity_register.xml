@@ -22,26 +22,40 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="354dp"
-            android:layout_height="68dp"
+            android:layout_width="250dp"
+            android:layout_height="63dp"
+            android:layout_gravity="left"
+            android:layout_marginStart="8sp"
+            android:layout_marginEnd="180sp"
             android:src="@drawable/logo" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="11dp" />
+            android:layout_height="5dp" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10sp"
             android:fontFamily="@font/poppins_semibold"
-            android:paddingHorizontal="18dp"
-            android:paddingBottom="15sp"
-            android:text="Registre-se facilmente e acesse os cursos."
-            android:textAlignment="center"
+            android:text="@string/txt_title_register"
+            android:layout_marginHorizontal="25sp"
+            android:textSize="22sp"
+            android:paddingHorizontal="5sp"
+            android:textColor="@color/green"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25sp"
+            android:layout_marginBottom="10sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/txt_subtitle_register"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:paddingHorizontal="5sp"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <EditText
@@ -51,7 +65,7 @@
             android:backgroundTint="#CCCCCC"
             android:drawablePadding="13dp"
             android:fontFamily="@font/poppins_semibold"
-            android:hint="Nome Completo"
+            android:hint="@string/txt_fullname"
             android:inputType="textEmailAddress"
             android:textColor="#FFFFFF"
             android:paddingVertical="15sp"
@@ -75,7 +89,7 @@
             android:backgroundTint="#CCCCCC"
             android:drawablePadding="13dp"
             android:fontFamily="@font/poppins_semibold"
-            android:hint="E-mail"
+            android:hint="@string/txt_email"
             android:paddingVertical="15sp"
             android:paddingHorizontal="10sp"
             android:inputType="textEmailAddress"
@@ -101,7 +115,7 @@
             android:paddingVertical="15sp"
             android:paddingHorizontal="10sp"
             android:layout_marginHorizontal="25sp"
-            android:hint="Senha"
+            android:hint="@string/txt_password"
             android:textColorHint="#DDDADA" />
 
         <Space
@@ -137,7 +151,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.4"
-                android:text="Já possui uma conta?"
+                android:text="@string/txt_title_to_login"
                 android:textAlignment="textEnd"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins_semibold"
@@ -150,11 +164,11 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Entrar"
+                android:text="@string/btn_entrar"
                 android:textAlignment="textStart"
                 android:paddingLeft="5sp"
                 android:textSize="13sp"
-                android:textColor="#01FAAA" />
+                android:textColor="@color/green" />
         </LinearLayout>
 
     </LinearLayout>
