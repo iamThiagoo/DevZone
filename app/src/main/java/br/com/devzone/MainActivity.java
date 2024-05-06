@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,11 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        // Carregar a animação de fadeIn na logo
+        Animation fadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        ImageView imageView = findViewById(R.id.logo);
+        imageView.startAnimation(fadeInAnimation);
 
         // Splash screen
         Handler handler = new Handler();
