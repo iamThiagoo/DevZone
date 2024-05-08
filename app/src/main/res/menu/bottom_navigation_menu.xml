@@ -8,7 +8,12 @@
         android:title="Início"/>
 
     <item
-        android:id="@+id/content"
+        android:id="@+id/course"
         android:icon="@android:drawable/ic_btn_speak_now"
-        android:title="Conteúdo"/>
+        android:title="Cursos"/>
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@android:drawable/ic_btn_speak_now"
+        android:title="Perfil"/>
 </menu>

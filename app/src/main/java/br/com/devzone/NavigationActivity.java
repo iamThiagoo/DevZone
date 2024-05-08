@@ -12,7 +12,9 @@ public class NavigationActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     private HomeFragment homeFragment;
-    private ContentFragment contentFragment;
+    private CourseFragment courseFragment;
+
+    private ProfileFragment profileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,8 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Inicializando os fragments
         homeFragment = new HomeFragment();
-        contentFragment = new ContentFragment();
+        courseFragment = new CourseFragment();
+        profileFragment = new ProfileFragment();
 
         // Configurando o BottomNavigationView
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -33,7 +36,7 @@ public class NavigationActivity extends AppCompatActivity {
                 .commit();
 
         // Configurando o distintivo para o item "content"
-        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.content);
+        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.course);
         badgeDrawable.setVisible(true);
         badgeDrawable.setNumber(8);
     }
@@ -46,8 +49,11 @@ public class NavigationActivity extends AppCompatActivity {
                     if (itemId == R.id.home) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
                         return true;
-                    } else if (itemId == R.id.content) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, contentFragment).commit();
+                    } else if (itemId == R.id.course) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, courseFragment).commit();
+                        return true;
+                    }else if (itemId == R.id.profile) {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
                         return true;
                     }
                     return false;
