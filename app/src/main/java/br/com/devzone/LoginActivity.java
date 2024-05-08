@@ -98,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
                             .setPositiveButton("Ok, entendido!", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    return;
                                 }
                             });
                         builder.show();

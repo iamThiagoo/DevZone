@@ -17,5 +17,7 @@
     <string name="txt_title_register">Não possui uma conta?</string>
     <string name="txt_subtitle_register">Registre-se facilmente e acesse os melhores cursos.</string>
     <string name="txt_title_to_login">Já possui uma conta?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

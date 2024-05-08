@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
 
                     // TODO: Redirecionar para página HomeActivity (quando existir)
-                    intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                    intent = new Intent(getApplicationContext(), NavigationActivity.class);
 
                 } else {
                     intent = new Intent(getApplicationContext(), LoginActivity.class);

@@ -5,4 +5,10 @@
     <color name="blue">#061223</color>
     <color name="red">#eb4034</color>
     <color name="green">#01FAAA</color>
+
+
+    <color name="green_dark">#062925</color>
+    <color name="green_normal">#044a42</color>
+    <color name="green_light">#3a9188</color>
+    <color name="green_light2">#b8e1dd</color>
 </resources>
