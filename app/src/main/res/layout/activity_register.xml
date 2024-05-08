@@ -22,11 +22,9 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="63dp"
-            android:layout_gravity="left"
-            android:layout_marginStart="8sp"
-            android:layout_marginEnd="180sp"
+            android:layout_gravity="center"
             android:src="@drawable/logo" />
 
         <Space
@@ -42,6 +40,7 @@
             android:layout_marginHorizontal="25sp"
             android:textSize="22sp"
             android:paddingHorizontal="5sp"
+            android:gravity="center"
             android:textColor="@color/green"
             android:textStyle="bold" />
 
@@ -52,6 +51,7 @@
             android:layout_marginHorizontal="25sp"
             android:layout_marginBottom="10sp"
             android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
             android:text="@string/txt_subtitle_register"
             android:textColor="@color/white"
             android:paddingHorizontal="5sp"

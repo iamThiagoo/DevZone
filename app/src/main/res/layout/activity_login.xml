@@ -27,9 +27,7 @@
         <ImageView
             android:layout_width="250dp"
             android:layout_height="63dp"
-            android:layout_gravity="left"
-            android:layout_marginStart="8sp"
-            android:layout_marginEnd="180sp"
+            android:layout_gravity="center"
             android:src="@drawable/logo" />
 
         <Space
@@ -46,6 +44,7 @@
             android:layout_marginHorizontal="25sp"
             android:paddingHorizontal="5sp"
             android:textSize="23sp"
+            android:gravity="center"
             android:textStyle="bold" />
 
         <TextView
@@ -58,6 +57,7 @@
             android:textColor="#01FAAA"
             android:textSize="17sp"
             android:paddingHorizontal="5sp"
+            android:gravity="center"
             android:textStyle="bold" />
 
         <Space
