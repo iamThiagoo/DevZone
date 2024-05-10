@@ -37,6 +37,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -47,7 +49,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
 
     // Implementa o Google Analytics no projeto
-    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-analytics:20.0.0")
 
     // Implementa o Material Design no projeto
     implementation("com.google.android.material:material")
