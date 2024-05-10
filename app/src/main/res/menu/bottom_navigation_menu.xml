@@ -4,12 +4,12 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@android:drawable/ic_menu_directions"
+        android:icon="@drawable/home_navigation"
         android:title="Início"/>
 
     <item
         android:id="@+id/course"
-        android:icon="@android:drawable/ic_btn_speak_now"
+        android:icon="@drawable/course_navigation"
         android:title="Cursos"/>
 
     <item
