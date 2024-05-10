@@ -1,12 +1,14 @@
 package br.com.devzone;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -18,7 +20,10 @@ public class NavigationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Padrão da tela
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_navigation);
 
         // Inicializando os fragments

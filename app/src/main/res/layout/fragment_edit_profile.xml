@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="20sp"
+            android:layout_marginTop="45dp"
+            android:text="Meus Dados" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/txt_personal_infos"
+            android:layout_marginTop="30sp"
+            android:textColor="#5E5E5E"
+            android:paddingHorizontal="10sp"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CCCCCC"
+            android:drawablePadding="13dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:hint="@string/txt_fullname"
+            android:inputType="text"
+            android:paddingHorizontal="10sp"
+            android:paddingVertical="15sp"
+            android:textColor="#706F6F"
+            android:textColorHint="#706F6F"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#2AE8E6E6"
+            android:backgroundTint="#CCCCCC"
+            android:drawablePadding="13dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:hint="@string/txt_email"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="10sp"
+            android:paddingVertical="15sp"
+            android:textColor="#706F6F"
+            android:textColorHint="#706F6F"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30sp"
+            android:layout_marginBottom="4sp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/txt_update_password"
+            android:paddingHorizontal="10sp"
+            android:textColor="#5E5E5E"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/edtActualPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CCCCCC"
+            android:drawablePadding="13dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:hint="@string/txt_actual_password"
+            android:paddingHorizontal="10sp"
+            android:paddingVertical="15sp"
+            android:textColor="#706F6F"
+            android:textColorHint="#706F6F"
+            android:inputType="textPassword"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/edtNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#CCCCCC"
+            android:drawablePadding="13dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:hint="@string/txt_new_password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="10sp"
+            android:paddingVertical="15sp"
+            android:textColor="#706F6F"
+            android:textColorHint="#706F6F"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnUpdateData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#189A35"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="10sp"
+            android:text="@string/btn_updateData"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnDeleteAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textAlignment="center"
+            android:gravity="bottom"
+            android:text="@string/btn_deleteAccount"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="#DC0A0A" />
+
+    </LinearLayout>
+
+</RelativeLayout>

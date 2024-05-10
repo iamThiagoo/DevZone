@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
                 // Verifica se possível usuário logado para redirecioná-lo para página correta
                 if (user != null) {
-
-                    // TODO: Redirecionar para página HomeActivity (quando existir)
                     intent = new Intent(getApplicationContext(), NavigationActivity.class);
 
                 } else {

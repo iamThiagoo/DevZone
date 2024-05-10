@@ -84,9 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-
-                        // TODO: Redirecionar para página HomeActivity (quando existir)
-                        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                         startActivity(intent);
                         finish();
 

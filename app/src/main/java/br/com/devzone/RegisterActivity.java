@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -124,9 +123,9 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    //startActivity(new Intent(getApplicationContxet(), HomeActivity.class));
-                    //finish();
-                    Toast.makeText(RegisterActivity.this, "Deu pão!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
