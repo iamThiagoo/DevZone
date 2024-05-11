@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp">
+    <ImageView
+        android:id="@+id/imageCourse"
+        android:contentDescription="@string/logo_course"
+        android:layout_width="60dp"
+        android:layout_height="42dp"
+        android:background="#ffffff"
+        android:scaleType="centerCrop"  />
+    <TextView
+        android:id="@+id/textCourse"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imageCourse"
+        android:layout_alignTop="@+id/imageCourse"
+        android:text="@string/txt_nameCourse"
+        android:textSize="20sp"
+        android:textColor="#333333"
+        android:paddingLeft="5dp"    />
+<!--    <TextView-->
+<!--        android:id="@+id/textModule"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/imageCourse"-->
+<!--        android:layout_toRightOf="@+id/imageCourse"-->
+<!--        android:text="@string/txt_module"-->
+<!--        android:textColor="#333333"-->
+<!--        android:paddingLeft="5dp"   />-->
+</RelativeLayout>

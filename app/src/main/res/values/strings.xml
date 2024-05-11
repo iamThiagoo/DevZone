@@ -32,6 +32,12 @@
     <string name="btn_updateData">Atualizar Dados</string>
     <string name="btn_deleteAccount">Deletar conta</string>
 
+    <!--    Página de Cursos-->
+
+    <string name="logo_course">Curso</string>
+    <string name="txt_nameCourse">Programação</string>
+    <string name="txt_module">2 unidades</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

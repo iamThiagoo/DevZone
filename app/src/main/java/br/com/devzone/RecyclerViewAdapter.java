@@ -1,17 +1,21 @@
 package br.com.devzone;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private List<String> mData;
     private LayoutInflater mInflater;
+    private ItemClickListener mClickListener;
 
     public RecyclerViewAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
@@ -35,17 +39,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public int getItemCount() {
         return mData.size();
     }
+    /**
+      *Método para configurar o clique nos itens do RecyclerView
+     */
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    // ViewHolder
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.text_view);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(String text) {
             mTextView.setText(text);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null) {
+                mClickListener.onItemClick(view, getAdapterPosition());
+            }
+        }
+    }
+
+    /**
+      *Interface para lidar com o clique nos itens do RecyclerView
+     */
+    public interface ItemClickListener {
+        void onItemClick(View view,      int position);
     }
 }

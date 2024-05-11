@@ -2,63 +2,121 @@ package br.com.devzone;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CourseFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+
+
 public class CourseFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    ListView listaCourses;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_course, container, false);
+        listaCourses = view.findViewById(R.id.listaCursos);
 
-    public CourseFragment() {
-        // Required empty public constructor
+        // Recuperar a posição do card clicado se foi enviado, se não for enviado
+        // significa que ele veio através do botão navigation
+        Bundle args = getArguments();
+        if (args != null && args.containsKey("position")) {
+            int position = args.getInt("position");
+
+            listaCourseCategoria(position, new OnCoursesLoadedListener() {
+                @Override
+                public void onCoursesLoaded(ArrayList<Course> courses) {
+                    // Atualiza a lista de cursos quando a consulta estiver concluída
+                    CourseAdapter adapter = new CourseAdapter(requireContext(), courses);
+                    listaCourses.setAdapter(adapter);
+                }
+            });
+        } else {
+            listaCourse(new OnCoursesLoadedListener() {
+                @Override
+                public void onCoursesLoaded(ArrayList<Course> courses) {
+                    // Atualiza a lista de cursos quando a consulta estiver concluída
+                    CourseAdapter adapter = new CourseAdapter(requireContext(), courses);
+                    listaCourses.setAdapter(adapter);
+                }
+            });
+        }
+
+
+        return view;
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CourseFragment.
+      *Método para carregar os cursos associados à posição do card clicado
      */
-    // TODO: Rename and change types and number of parameters
-    public static CourseFragment newInstance(String param1, String param2) {
-        CourseFragment fragment = new CourseFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    private void listaCourseCategoria(int position, OnCoursesLoadedListener listener) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Aqui, você pode usar a posição para filtrar os cursos
+        // Exemplo: .whereEqualTo("categoria_id", position)
+
+        db.collection("courses").whereEqualTo("categoria_id", position).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Adiciona descrição da categoria no card
+                                String nome = document.getData().get("name").toString();
+                                String caminhoImagem = document.getData().get("image_url").toString(); // Busca url salva no Firestone
+                                courses.add(new Course(nome, 1, caminhoImagem));
+                            }
+                            // Chama o listener quando a consulta estiver concluída
+                            listener.onCoursesLoaded(courses);
+                        } else {
+                            Log.d("Brito", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+    // Método para carregar os todos os cursos
+    private void listaCourse(OnCoursesLoadedListener listener) {
+        ArrayList<Course> courses = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("courses").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Adiciona descrição da categoria no card
+                                String nome = document.getData().get("name").toString();
+                                String caminhoImagem = document.getData().get("image_url").toString(); // Busca url salva no Firestone
+                                courses.add(new Course(nome, 1, caminhoImagem));
+                            }
+                            // Chama o listener quando a consulta estiver concluída
+                            listener.onCoursesLoaded(courses);
+                        } else {
+                            Log.d("Brito", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course, container, false);
+    // Interface para a interface OnCoursesLoadedListener
+    interface OnCoursesLoadedListener {
+        void onCoursesLoaded(ArrayList<Course> courses);
     }
 }
