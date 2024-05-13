@@ -55,7 +55,9 @@ public class CourseAdapter extends BaseAdapter {
         return convertView;
     }
 
-    // Classe ViewHolder para melhorar o desempenho
+    /**
+     * Classe ViewHolder para melhorar o desempenho
+      */
     private static class ViewHolder {
         TextView textCourse;
         ImageView imageCourse;

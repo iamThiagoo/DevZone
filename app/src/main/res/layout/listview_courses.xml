@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:background="@drawable/devzone_list_view">
     <ImageView
         android:id="@+id/imageCourse"
         android:contentDescription="@string/logo_course"

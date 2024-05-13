@@ -64,10 +64,10 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="27dp"
+                android:layout_gravity="center"
                 android:src="@drawable/navigate_next"
-                app:tint="#454444"
-                android:layout_gravity="center"/>
+                app:tint="#454444" />
         </LinearLayout>
 
         <Button

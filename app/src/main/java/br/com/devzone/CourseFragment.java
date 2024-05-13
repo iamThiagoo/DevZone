@@ -1,5 +1,6 @@
 package br.com.devzone;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,6 +57,18 @@ public class CourseFragment extends Fragment {
             });
         }
 
+        listaCourses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> curso, View view, int position, long id) {
+                // Obter o objeto Course correspondente à posição clicada
+                Course clickedCourse = (Course) curso.getItemAtPosition(position);
+
+                // Acessa os dados do curso de acordo com adapter
+                String nomeCurso = clickedCourse.getNome();
+                Toast.makeText(requireContext(), "Item na posição " + nomeCurso + " clicado", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return view;
     }
@@ -65,9 +80,6 @@ public class CourseFragment extends Fragment {
         ArrayList<Course> courses = new ArrayList<>();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Aqui, você pode usar a posição para filtrar os cursos
-        // Exemplo: .whereEqualTo("categoria_id", position)
 
         db.collection("courses").whereEqualTo("categoria_id", position).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -90,7 +102,9 @@ public class CourseFragment extends Fragment {
     }
 
 
-    // Método para carregar os todos os cursos
+    /**
+     *Método para carregar os todos os cursos
+     */
     private void listaCourse(OnCoursesLoadedListener listener) {
         ArrayList<Course> courses = new ArrayList<>();
 
@@ -115,7 +129,9 @@ public class CourseFragment extends Fragment {
                 });
     }
 
-    // Interface para a interface OnCoursesLoadedListener
+    /**
+     *Interface para a interface OnCoursesLoadedListener
+     */
     interface OnCoursesLoadedListener {
         void onCoursesLoaded(ArrayList<Course> courses);
     }

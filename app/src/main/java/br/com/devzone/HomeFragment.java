@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
 
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    private List<String> dataList = new ArrayList<>();
+    private List<String> categorias = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,13 +53,13 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             // Limpa a lista antes de adicionar novos dados
-                            dataList.clear();
+                            categorias.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // Adiciona descrição da categoria no card
-                                dataList.add(document.getData().get("name").toString());
+                                categorias.add(document.getData().get("name").toString());
                             }
                             // Cria o adaptador com os dados e define no RecyclerView
-                            adapter = new RecyclerViewAdapter(getActivity(), dataList);
+                            adapter = new RecyclerViewAdapter(getActivity(), categorias);
                             adapter.setClickListener(HomeFragment.this); // Configurando o clique
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
                 .commit();
 
         // Ação a ser executada quando um item do CardView é clicado for clicado
-        String categoriaSelecionada = dataList.get(position);
+        String categoriaSelecionada = categorias.get(position);
     }
 }
 
