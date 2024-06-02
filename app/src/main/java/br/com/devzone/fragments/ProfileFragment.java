@@ -1,4 +1,4 @@
-package br.com.devzone;
+package br.com.devzone.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import br.com.devzone.R;
+import br.com.devzone.activities.LoginActivity;
 
 public class ProfileFragment extends Fragment {
 

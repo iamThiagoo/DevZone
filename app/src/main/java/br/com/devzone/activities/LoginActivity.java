@@ -1,4 +1,4 @@
-package br.com.devzone;
+package br.com.devzone.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import br.com.devzone.R;
 
 public class LoginActivity extends AppCompatActivity {
 

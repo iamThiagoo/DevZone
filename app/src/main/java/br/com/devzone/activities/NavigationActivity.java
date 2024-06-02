@@ -1,13 +1,20 @@
-package br.com.devzone;
+package br.com.devzone.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import br.com.devzone.R;
+import br.com.devzone.fragments.CourseFragment;
+import br.com.devzone.fragments.HomeFragment;
+import br.com.devzone.fragments.ProfileFragment;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -40,9 +47,9 @@ public class NavigationActivity extends AppCompatActivity {
                 .commit();
 
         // Configurando o distintivo para o item "content"
-        BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.course);
+        /*BadgeDrawable badgeDrawable = bottomNavigationView.getOrCreateBadge(R.id.course);
         badgeDrawable.setVisible(true);
-        badgeDrawable.setNumber(8);
+        badgeDrawable.setNumber(8);*/
 
         // Card view
         RecyclerView recyclerView = findViewById(R.id.recycler_view);

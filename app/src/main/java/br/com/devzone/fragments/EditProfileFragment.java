@@ -1,4 +1,4 @@
-package br.com.devzone;
+package br.com.devzone.fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +23,9 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import br.com.devzone.R;
+import br.com.devzone.activities.LoginActivity;
 
 public class EditProfileFragment extends Fragment {
 

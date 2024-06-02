@@ -1,4 +1,4 @@
-package br.com.devzone;
+package br.com.devzone.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import br.com.devzone.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -154,8 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton("Ok, entendido!", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 });
         builder.show();
     }

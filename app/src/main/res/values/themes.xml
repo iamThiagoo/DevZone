@@ -4,6 +4,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@color/blue</item>
     </style>
 
     <style name="Theme.DevZone" parent="Base.Theme.DevZone" />

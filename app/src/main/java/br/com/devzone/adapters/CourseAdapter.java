@@ -1,4 +1,4 @@
-package br.com.devzone;
+package br.com.devzone.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
+
+import br.com.devzone.R;
+import br.com.devzone.classes.Course;
 
 public class CourseAdapter extends BaseAdapter {
 

@@ -1,4 +1,4 @@
-package br.com.devzone;
+package br.com.devzone.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +19,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import br.com.devzone.R;
+import br.com.devzone.adapters.RecyclerViewAdapter;
 
 public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
 
