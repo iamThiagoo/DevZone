@@ -1,7 +1,5 @@
 package br.com.devzone.classes;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +16,8 @@ public class UserCourse {
     private String course_id;
     private String user_id;
     private String currentCourseVideoId;
+
+    public UserCourse() {}
 
     public UserCourse(String course_id, String user_id, String currentCourseVideoId) {
         this.course_id = course_id;
@@ -38,7 +38,7 @@ public class UserCourse {
     }
 
     public static void createUserCourse(Course course, String userId, OnUserCourseCreatedListener listener) {
-        // Obtenha o objeto CourseVideo correspondente à ordem 1 (primeiro vídeo)
+
         CourseVideo.getCourseVideoByOrder(course, 1, new CourseVideo.OnCourseVideoLoadedListener() {
             @Override
             public void onCourseVideoLoaded(CourseVideo courseVideo) {
@@ -49,10 +49,6 @@ public class UserCourse {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 CollectionReference userCoursesRef = db.collection("user_courses");
-
-                Log.d("createUserCourse", "Course ID: " + course.getId());
-                Log.d("createUserCourse", "User ID: " + userId);
-                Log.d("createUserCourse", "Course Video ID: " + courseVideo.getId());
 
                 // Crie um novo objeto UserCourse com os dados fornecidos
                 final UserCourse userCourse = new UserCourse(course.getId(), userId, courseVideo.getId());
@@ -88,7 +84,11 @@ public class UserCourse {
                     QuerySnapshot querySnapshot = task.getResult();
                     if (!querySnapshot.isEmpty()) {
                         DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-                        UserCourse userCourse = document.toObject(UserCourse.class);
+                        UserCourse userCourse = new UserCourse(
+                                                        document.getString("courseId"),
+                                                        document.getString("userId"),
+                                                        document.getString("currentCourseVideoId")
+                                                );
                         listener.onUserCourseLoaded(userCourse);
                     } else {
                         listener.onUserCourseLoaded(null);

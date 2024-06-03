@@ -3,12 +3,19 @@ package br.com.devzone.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,14 +75,26 @@ public class CourseActivity extends AppCompatActivity {
 
                 // Define o nome do Toolbar
                 getSupportActionBar().setTitle(course.getNome());
+
                 UserCourse.getUserCourse(courseId, user.getUid(), new UserCourse.OnUserCourseLoadedListener() {
                     @Override
                     public void onUserCourseLoaded(UserCourse userCourse) {
                         if (userCourse != null) {
-                            Log.d("Firestore", "UserCourse encontrado");
-                            loadCourseVideos();
+                            // Carrega vídeos do curso
+                            loadCourseVideos().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        loadVideoInWebView(userCourse.getCurrentCourseVideoId());
+                                    } else {
+                                        Log.d("loadCourseVideos", "Erro ao carregar vídeos: ", task.getException());
+                                    }
+                                }
+                            });
                         } else {
                             // Matricula usuário no curso
+                            Log.d("Firestore", "UserCourse não encontrado");
+
                             UserCourse.createUserCourse(course, user.getUid(), new UserCourse.OnUserCourseCreatedListener() {
                                 @Override
                                 public void onUserCourseCreated(UserCourse createdUserCourse, Exception e) {
@@ -91,30 +110,6 @@ public class CourseActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-                /*Log.d("Firestore", courseId);
-                Log.d("Firestore", user.getUid());
-
-                if (userCourse != null) {
-                    Log.d("Firestore", "UserCourse encontrado");
-                    loadCourseVideos();
-                } else {
-                    Log.d("Firestore", "UserCourse não encontrado");
-
-                    // Matricula usuário no curso
-                    UserCourse.createUserCourse(course, user.getUid(), new UserCourse.OnUserCourseCreatedListener() {
-                        @Override
-                        public void onUserCourseCreated(UserCourse userCourse, Exception e) {
-                            if (userCourse != null) {
-                                Log.d("Firestore", "UserCourse criado");
-                                loadCourseVideos();
-                            } else {
-                                // Lida com o erro ao criar o UserCourse
-                                handleUserCourseCreationError(e);
-                            }
-                        }
-                    });
-                }*/
             }
 
             @Override
@@ -137,25 +132,31 @@ public class CourseActivity extends AppCompatActivity {
     /**
      *
      */
-    private void loadCourseVideos() {
-        course.loadVideos(new Course.OnVideosLoadedListener() {
-            @Override
-            public void onVideosLoaded(ArrayList<CourseVideo> loadVideos) {
-                videos = loadVideos;
-                loadVideosInListView();
-            }
+    private Task<Void> loadCourseVideos() {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
 
+        course.loadVideos().addOnCompleteListener(new OnCompleteListener<ArrayList<CourseVideo>>() {
             @Override
-            public void onError(String errorMessage) {
-                Log.d("Firestore", "Error loading videos: " + errorMessage);
-                Toast.makeText(getApplicationContext(), "Erro ao carregar vídeos do curso", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<ArrayList<CourseVideo>> task) {
+                if (task.isSuccessful()) {
+                    videos = task.getResult();
+                    loadVideosInListView();
+                    taskCompletionSource.setResult(null); // Task<Void> expected result
+                } else {
+                    String errorMessage = task.getException().getMessage();
+                    Log.d("Firestore", "Error loading videos: " + errorMessage);
+                    Toast.makeText(getApplicationContext(), "Erro ao carregar vídeos do curso", Toast.LENGTH_SHORT).show();
 
-                // Volta para a tela inicial do app
-                Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
-                startActivity(intent);
-                finish();
+                    // Volta para a tela inicial do app
+                    Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                    startActivity(intent);
+                    finish();
+                    taskCompletionSource.setException(task.getException());
+                }
             }
         });
+
+        return taskCompletionSource.getTask();
     }
 
 
@@ -171,6 +172,30 @@ public class CourseActivity extends AppCompatActivity {
 
         TabLayout tabs = findViewById(R.id.tabLayout);
         new TabLayoutMediator(tabs, viewPager, (tab, position) -> tab.setText(tabTitles[position])).attach();
+    }
+
+
+    /**
+     * Método que carrega o vídeo no WebView para usuário assistir
+     */
+    private void loadVideoInWebView(String videoId)
+    {
+        CourseVideo courseVideo = null;
+
+        for(CourseVideo video : videos) {
+            if (video.getId().equals(videoId)) {
+                courseVideo = video;
+            }
+        }
+
+        String iframe = courseVideo.getIframeEmbed();
+        WebView webView = findViewById(R.id.courseWebView);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setLoadWithOverviewMode(true);
+        webSettings.setUseWideViewPort(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadData(iframe, "text/html", "UTF-8");
     }
 
 

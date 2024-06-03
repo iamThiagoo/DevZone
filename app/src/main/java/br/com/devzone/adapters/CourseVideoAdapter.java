@@ -45,7 +45,10 @@ public class CourseVideoAdapter extends BaseAdapter {
         CourseVideo item = items.get(position);
 
         TextView order = convertView.findViewById(R.id.course_video_position);
-        order.setText(position + ".");
+
+        // Acrescenta mais um para a listagem dos vídeos não iniciar em 0
+        String positionInList = String.valueOf(position + 1);
+        order.setText(positionInList + ".");
 
         TextView title = convertView.findViewById(R.id.course_video_name);
         title.setText(item.getName());

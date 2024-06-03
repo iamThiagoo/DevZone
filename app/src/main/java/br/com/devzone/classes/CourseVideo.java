@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -67,39 +67,37 @@ public class CourseVideo implements Parcelable {
 
     }
 
+
     public static void getCourseVideoByOrder(Course course, int order, OnCourseVideoLoadedListener listener) {
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference videosRef = db.collection("courses").document(course.getId()).collection("videos");
+        CollectionReference videosRef = db.collection("course_videos");
 
-        Query query = videosRef.whereEqualTo("order", order);
+        Query query = videosRef.whereEqualTo("order", order).whereEqualTo("course_id", course.getId());
 
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        Log.d("Firestore", "oiiiii");
+
+        db.collection("course_videos").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    QuerySnapshot querySnapshot = task.getResult();
-                    if (!querySnapshot.isEmpty()) {
-                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+            public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
 
-                        String videoId = document.getId();
-                        String videoName = document.getString("title");
-                        Integer videoOrder = document.getLong("order").intValue();
-                        String videoUri = document.getString("uri");
+                DocumentSnapshot document = querySnapshot.getDocuments().get(0);
 
-                        Log.d("getCourseVideoByOrder", "Course Video ID: " + document.getId());
-                        Log.d("getCourseVideoByOrder", "Course Title ID: " + document.getString("title"));
-                        Log.d("getCourseVideoByOrder", "Course URI ID: " + document.getString("uri"));
+                if (querySnapshot != null && !querySnapshot.isEmpty()) {
 
-                        CourseVideo courseVideo = new CourseVideo(course, videoId, videoName, videoOrder, videoUri);
-                        listener.onCourseVideoLoaded(courseVideo);
-                    } else {
-                        listener.onCourseVideoLoaded(null);
-                    }
+                    String videoId = document.getId();
+                    String videoName = document.getString("title");
+                    Integer videoOrder = document.getLong("order").intValue();
+                    String videoUri = document.getString("uri");
+
+                    Log.d("getCourseVideoByOrder", "Course Video ID: " + document.getId());
+                    Log.d("getCourseVideoByOrder", "Course Title: " + videoName);
+                    Log.d("getCourseVideoByOrder", "Course URI: " + videoUri);
+
+                    CourseVideo courseVideo = new CourseVideo(course, videoId, videoName, videoOrder, videoUri);
+                    listener.onCourseVideoLoaded(courseVideo);
                 } else {
-                    Exception e = task.getException();
-                    if (e != null) {
-                        e.printStackTrace();
-                    }
+                    Log.d("getCourseVideoByOrder", "No video found for order: " + order);
                     listener.onCourseVideoLoaded(null);
                 }
             }

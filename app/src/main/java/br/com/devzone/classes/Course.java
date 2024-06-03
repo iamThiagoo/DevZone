@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -66,35 +67,37 @@ public class Course {
             });
     }
 
-    public void loadVideos(final OnVideosLoadedListener listener) {
-
+    public Task<ArrayList<CourseVideo>> loadVideos() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        TaskCompletionSource<ArrayList<CourseVideo>> taskCompletionSource = new TaskCompletionSource<>();
 
         db.collection("course_videos")
-            .whereEqualTo("course_id", id)
-            .orderBy("order")
-            .get()
-            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        videos.clear();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            CourseVideo video = new CourseVideo(
-                                    Course.this, // Passa a referência do curso atual
-                                    document.getId(),
-                                    document.getString("name"),
-                                    document.getLong("order").intValue(),
-                                    document.getString("uri")
-                            );
-                            videos.add(video);
+                .whereEqualTo("course_id", id)
+                .orderBy("order")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            ArrayList<CourseVideo> loadedVideos = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                CourseVideo video = new CourseVideo(
+                                        Course.this, // Passa a referência do curso atual
+                                        document.getId(),
+                                        document.getString("name"),
+                                        document.getLong("order").intValue(),
+                                        document.getString("uri")
+                                );
+                                loadedVideos.add(video);
+                            }
+                            taskCompletionSource.setResult(loadedVideos);
+                        } else {
+                            taskCompletionSource.setException(task.getException());
                         }
-                        listener.onVideosLoaded(videos);
-                    } else {
-                        listener.onError(task.getException().getMessage());
                     }
-                }
-            });
+                });
+
+        return taskCompletionSource.getTask();
     }
 
     public interface OnVideosLoadedListener {
