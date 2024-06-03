@@ -13,16 +13,19 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class UserCourse {
 
+    private String id;
     private String course_id;
     private String user_id;
     private String currentCourseVideoId;
-
-    public UserCourse() {}
 
     public UserCourse(String course_id, String user_id, String currentCourseVideoId) {
         this.course_id = course_id;
         this.user_id = user_id;
         this.currentCourseVideoId = currentCourseVideoId;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getCourseId() {

@@ -1,8 +1,11 @@
 package br.com.devzone.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,14 +17,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.devzone.R;
 import br.com.devzone.adapters.CourseViewAdapter;
@@ -85,7 +100,7 @@ public class CourseActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        loadVideoInWebView(userCourse.getCurrentCourseVideoId());
+                                        loadVideoInWebView(userCourse);
                                     } else {
                                         Log.d("loadCourseVideos", "Erro ao carregar vídeos: ", task.getException());
                                     }
@@ -178,12 +193,12 @@ public class CourseActivity extends AppCompatActivity {
     /**
      * Método que carrega o vídeo no WebView para usuário assistir
      */
-    private void loadVideoInWebView(String videoId)
+    private void loadVideoInWebView(UserCourse userCourse)
     {
         CourseVideo courseVideo = null;
 
         for(CourseVideo video : videos) {
-            if (video.getId().equals(videoId)) {
+            if (video.getId().equals(userCourse.getCurrentCourseVideoId())) {
                 courseVideo = video;
             }
         }
@@ -196,6 +211,123 @@ public class CourseActivity extends AppCompatActivity {
         webSettings.setUseWideViewPort(true);
         webView.setWebViewClient(new WebViewClient());
         webView.loadData(iframe, "text/html", "UTF-8");
+
+        // Verifica se usuário já assistiu esse vídeo, se não ativa ação de ouvir o player do video
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Query query = db.collection("user_course_videos")
+                .whereEqualTo("course_video_id", courseVideo.getId())
+                .whereEqualTo("user_id", user.getUid());
+
+        CourseVideo finalCourseVideo = courseVideo;
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    boolean videoWatched = !querySnapshot.isEmpty(); // Se o querySnapshot não estiver vazio, significa que o usuário já assistiu ao vídeo
+
+                    if (!videoWatched) {
+                        // Se o vídeo ainda não foi assistido, atribua o OnTouchListener ao WebView
+                        webView.setOnTouchListener(new View.OnTouchListener() {
+                            @SuppressLint("ClickableViewAccessibility")
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+
+                                // Desabilita o OnTouchListener do WebView
+                                webView.setOnTouchListener(null);
+
+                                // Adiciona no banco que usuário assistiu o vídeo
+                                Map<String, Object> userCourseVideo = new HashMap<>();
+                                userCourseVideo.put("user_id", user.getUid());
+                                userCourseVideo.put("course_video_id", finalCourseVideo.getId());
+                                userCourseVideo.put("course_id", courseId);
+                                userCourseVideo.put("created_at", FieldValue.serverTimestamp());
+
+                                db.collection("user_course_videos")
+                                    .add(userCourseVideo)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {// Remove o OnTouchListener do WebView
+                                            Log.d("Firestore", "Registro inserido com sucesso! Document ID: " + documentReference.getId());
+
+                                            Integer totalVideos = videos.size();
+
+                                            Log.d("Firestore", "Total de vídeos " + String.valueOf(totalVideos));
+
+                                            // 2. Obtenha o número de vídeos que o usuário assistiu
+                                            db.collection("user_course_videos")
+                                                    .whereEqualTo("user_id", user.getUid())
+                                                    .whereEqualTo("course_id", courseId)
+                                                    .get()
+                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                            if (task.isSuccessful()) {
+                                                                int watchedVideos = task.getResult().size();
+                                                                Log.d("Firestore", "Total de vídeo assistidos " + String.valueOf(watchedVideos));
+
+                                                                Query query = db.collection("user_courses")
+                                                                        .whereEqualTo("courseId", userCourse.getCourseId())
+                                                                        .whereEqualTo("userId", userCourse.getUserId());
+
+                                                                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                    @Override
+                                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                        if (task.isSuccessful()) {
+                                                                            // Iterar sobre os documentos correspondentes
+                                                                            for (DocumentSnapshot document : task.getResult()) {
+                                                                                // Obter a referência do documento
+                                                                                DocumentReference docRef = document.getReference();
+
+                                                                                double completionPercentage = ((double) watchedVideos / totalVideos) * 100;
+                                                                                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                                                                                String formattedPercentage = decimalFormat.format(completionPercentage);
+
+                                                                                Map<String, Object> update = new HashMap<>();
+                                                                                update.put("completion_percentage", completionPercentage);
+
+                                                                                docRef.set(update, SetOptions.merge())
+                                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                                            if (task.isSuccessful()) {
+                                                                                                Log.d("Firestore", "Porcentagem de conclusão atualizada com sucesso");
+                                                                                            } else {
+                                                                                                Log.e("Firestore", "Erro ao atualizar a porcentagem de conclusão", task.getException());
+                                                                                            }
+                                                                                        }
+                                                                                    });
+                                                                            }
+                                                                        } else {
+                                                                            Log.e("Firestore", "Erro ao executar a consulta", task.getException());
+                                                                        }
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                Log.e("Firestore", "Erro ao obter vídeos assistidos", task.getException());
+                                                            }
+                                                        }
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.e("Firestore", "Erro ao inserir o registro", e);
+                                        }
+                                    });
+
+                                return false;
+                            }
+                        });
+                    }
+                } else {
+                    // Ocorreu um erro ao executar a consulta
+                    Log.d("Firestore", "Erro ao executar a consulta: " + task.getException().getMessage());
+                }
+            }
+        });
     }
 
 
