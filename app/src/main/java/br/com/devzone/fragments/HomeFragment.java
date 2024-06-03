@@ -22,12 +22,13 @@ import java.util.List;
 
 import br.com.devzone.R;
 import br.com.devzone.adapters.RecyclerViewAdapter;
+import br.com.devzone.classes.Category;
 
 public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
-    private List<String> categorias = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
         recyclerView.setLayoutManager(layoutManager);
 
         //Chama função para buscar as categorias
-        getCategorias();
+        getCategories();
 
         return view;
     }
@@ -47,7 +48,7 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
     /**
      * Método responsável por buscar as categorias e criar os card view
      */
-    private void getCategorias() {
+    private void getCategories() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         db.collection("courses_categories").orderBy("codigo").get()
@@ -56,13 +57,18 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             // Limpa a lista antes de adicionar novos dados
-                            categorias.clear();
+                            categories.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Adiciona descrição da categoria no card
-                                categorias.add(document.getData().get("name").toString());
+                                // Adiciona descrição da categoria e URL da imagem no card
+                                String nomeCategoria = document.getData().get("name").toString();
+                                String urlImagem = document.getData().get("image_url").toString();
+
+                                // Cria um objeto Category e adiciona à lista
+                                Category category = new Category(nomeCategoria, urlImagem);
+                                categories.add(category);
                             }
                             // Cria o adaptador com os dados e define no RecyclerView
-                            adapter = new RecyclerViewAdapter(getActivity(), categorias);
+                            adapter = new RecyclerViewAdapter(getActivity(), categories);
                             adapter.setClickListener(HomeFragment.this); // Configurando o clique
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -73,8 +79,8 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
     }
 
     /**
-    * Método chamado quando um item do RecyclerView é clicado
-    */
+     * Método chamado quando um item do RecyclerView é clicado
+     */
     @Override
     public void onItemClick(View view, int position) {
         // Criar uma nova instância do fragmento de curso com a posição do card clicado
@@ -90,7 +96,6 @@ public class HomeFragment extends Fragment implements RecyclerViewAdapter.ItemCl
                 .commit();
 
         // Ação a ser executada quando um item do CardView é clicado for clicado
-        String categoriaSelecionada = categorias.get(position);
+        String categoriaSelecionada = categories.get(position).getNome();
     }
 }
-
