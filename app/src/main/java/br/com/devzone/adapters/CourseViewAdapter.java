@@ -1,5 +1,7 @@
 package br.com.devzone.adapters;
 
+import android.annotation.SuppressLint;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -30,8 +32,19 @@ public class CourseViewAdapter extends FragmentStateAdapter {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void refreshAdapter() {
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return 2;
+    }
+
+    public void setOnItemClickListener(CourseViewAdapter.OnItemClickListener teste) {}
+
+    public static abstract class OnItemClickListener {
+        public abstract void onItemClick(int position);
     }
 }

@@ -19,7 +19,6 @@ import br.com.devzone.classes.CourseVideo;
  */
 public class CourseVideoFragment extends Fragment {
 
-    private static final String ARG_COLUMN_COUNT = "column-count";
     private ArrayList<CourseVideo> courseVideos;
 
     public CourseVideoFragment() {
@@ -30,7 +29,6 @@ public class CourseVideoFragment extends Fragment {
         CourseVideoFragment fragment = new CourseVideoFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("courseVideos", courseVideos);
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,14 +42,22 @@ public class CourseVideoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_course_video, container, false);
         ListView listView = root.findViewById(R.id.listView);
 
         // Adicione dados ao ListView
         CourseVideoAdapter adapter = new CourseVideoAdapter(getContext(), courseVideos);
         listView.setAdapter(adapter);
+
+        // Set the item click listener
+        adapter.setOnItemClickListener(new CourseVideoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                CourseVideo video = courseVideos.get(position);
+            }
+        });
+
         return root;
     }
 }

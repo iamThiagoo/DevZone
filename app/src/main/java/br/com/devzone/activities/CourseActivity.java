@@ -50,6 +50,7 @@ public class CourseActivity extends AppCompatActivity {
     protected String courseId;
     protected Course course;
     protected ArrayList<CourseVideo> videos;
+    protected CourseViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +180,7 @@ public class CourseActivity extends AppCompatActivity {
      * Método que carrega o vídeo atual do usuário
      */
     protected void loadVideosInListView() {
-        CourseViewAdapter adapter = new CourseViewAdapter(this, videos);
+        adapter = new CourseViewAdapter(this, videos);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
 
