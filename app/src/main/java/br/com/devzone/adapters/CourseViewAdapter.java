@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 import br.com.devzone.classes.CourseVideo;
 import br.com.devzone.fragments.CourseVideoFragment;
-import br.com.devzone.fragments.EmptyFragment;
+import br.com.devzone.fragments.EditProfileFragment;
+import br.com.devzone.fragments.QuestionnaireFragment;
 
 public class CourseViewAdapter extends FragmentStateAdapter {
 
@@ -28,7 +29,7 @@ public class CourseViewAdapter extends FragmentStateAdapter {
             return CourseVideoFragment.newInstance(videos);
         } else {
             // Atividades
-            return new EmptyFragment();
+            return new QuestionnaireFragment();
         }
     }
 
