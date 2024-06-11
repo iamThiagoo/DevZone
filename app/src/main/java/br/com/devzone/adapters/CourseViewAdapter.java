@@ -16,10 +16,12 @@ import br.com.devzone.fragments.QuestionnaireFragment;
 public class CourseViewAdapter extends FragmentStateAdapter {
 
     private ArrayList<CourseVideo> videos;
+    private String courseId;
 
-    public CourseViewAdapter(FragmentActivity fm, ArrayList<CourseVideo> videos) {
+    public CourseViewAdapter(FragmentActivity fm, ArrayList<CourseVideo> videos, String courseId) {
         super(fm);
         this.videos = videos;
+        this.courseId = courseId;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class CourseViewAdapter extends FragmentStateAdapter {
             return CourseVideoFragment.newInstance(videos);
         } else {
             // Atividades
-            return new QuestionnaireFragment();
+            return new QuestionnaireFragment(courseId);
         }
     }
 
@@ -46,6 +48,7 @@ public class CourseViewAdapter extends FragmentStateAdapter {
     public void setOnItemClickListener(CourseViewAdapter.OnItemClickListener teste) {}
 
     public static abstract class OnItemClickListener {
+
         public abstract void onItemClick(int position);
     }
 }

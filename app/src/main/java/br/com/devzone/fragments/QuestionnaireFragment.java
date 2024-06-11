@@ -25,6 +25,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 
 public class QuestionnaireFragment extends Fragment {
+
+    private String courseId;
+
+    public QuestionnaireFragment(String courseId) {
+       this.courseId = courseId;
+    }
     private RecyclerView questionnaireRecyclerView;
     private QuestionnaireAdapter adapter;
     private List<Question> questionList;
@@ -61,11 +67,12 @@ public class QuestionnaireFragment extends Fragment {
     private void loadQuestions() {
         questionList = new ArrayList<>();
 
-        getIdFomQuestion(idVideoQuestoes -> {
+        getIdFromQuestion(idVideoQuestoes -> {
             db.collection("course_form_questions").whereEqualTo("course_form_id",
                             idVideoQuestoes)
                     .get()
                     .addOnCompleteListener(task -> {
+                        Log.d("myTag2", idVideoQuestoes);
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
                                 questionnaireRecyclerView.setVisibility(View.VISIBLE);
@@ -97,14 +104,16 @@ public class QuestionnaireFragment extends Fragment {
     }
 
     // Método que usa o callback para retornar o resultado assíncrono
-    private void getIdFomQuestion(FirestoreCallback firestoreCallback) {
-        db.collection("user_course_videos").whereEqualTo("user_id", mauth.getUid())
+    private void getIdFromQuestion(FirestoreCallback firestoreCallback) {
+        Log.d("myTag", courseId);
+        db.collection("user_courses").whereEqualTo("userId", mauth.getUid())
+                .whereEqualTo("courseId", courseId)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful() && task.getResult() != null) {
                         if (!task.getResult().isEmpty()) {
                             DocumentSnapshot document = task.getResult().getDocuments().get(0);
-                            String options = document.getString("course_video_id");
+                            String options = document.getString("currentCourseVideoId");
                             firestoreCallback.onCallback(options != null ? options : "");
                         } else {
                             firestoreCallback.onCallback("");

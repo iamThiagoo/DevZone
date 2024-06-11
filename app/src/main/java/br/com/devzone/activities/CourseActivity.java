@@ -180,7 +180,7 @@ public class CourseActivity extends AppCompatActivity {
      * Método que carrega o vídeo atual do usuário
      */
     protected void loadVideosInListView() {
-        adapter = new CourseViewAdapter(this, videos);
+        adapter = new CourseViewAdapter(this, videos, courseId);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
 
