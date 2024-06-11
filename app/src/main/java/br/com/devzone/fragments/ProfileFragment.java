@@ -59,6 +59,9 @@ public class ProfileFragment extends Fragment {
         String name = mAuth.getCurrentUser().getDisplayName();
         tvWelcome.setText("Olá, " + name + "!");
 
+        TextView tvWEmail = getView().findViewById(R.id.txtEmailUser);
+        tvWEmail.setText(mAuth.getCurrentUser().getEmail());
+
         // Botões disponíveis para o usuário
         btnSignOut = getView().findViewById(R.id.btnSignOut);
         btnMyData  = getView().findViewById(R.id.btnMyData);

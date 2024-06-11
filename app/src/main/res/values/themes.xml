@@ -4,11 +4,16 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:statusBarColor">@color/blue</item>
+        <item name="android:statusBarColor">@color/blue</item>>
+
+        <item name="colorPrimary">@color/blueActive</item>
+        <item name="colorSecondaryContainer">@color/blueActive</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <style name="Theme.DevZone" parent="Base.Theme.DevZone" />
-    
+
     <style name="BottomNavigation">
         <item name="android:background">@color/green_dark</item>
         <item name="itemIconTint">@color/green_light2</item>

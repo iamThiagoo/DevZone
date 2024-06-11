@@ -38,6 +38,14 @@
             android:layout_marginTop="5sp"/>
 
         <TextView
+            android:id="@+id/txtEmailUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="15sp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30sp"

@@ -23,13 +23,4 @@
         android:textSize="16sp"
         android:textColor="#333333"
         android:paddingLeft="10dp" />
-<!--    <TextView-->
-<!--        android:id="@+id/textModule"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/imageCourse"-->
-<!--        android:layout_toRightOf="@+id/imageCourse"-->
-<!--        android:text="@string/txt_module"-->
-<!--        android:textColor="#333333"-->
-<!--        android:paddingLeft="5dp"   />-->
 </RelativeLayout>
