@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,10 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.devzone.R;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import br.com.devzone.adapters.QuestionnaireAdapter;
 import br.com.devzone.classes.Question;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,6 +49,8 @@ public class QuestionnaireFragment extends Fragment {
 
     private FirebaseAuth mauth;
 
+    private String idVideo;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +60,22 @@ public class QuestionnaireFragment extends Fragment {
         btnEnviarResposta = view.findViewById(R.id.btnEnviarResposta);
         txtPerguntasNaoEncontradas = view.findViewById(R.id.txtPerguntasNaoEncontradas);
         questionnaireRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        btnEnviarResposta.setOnClickListener(v -> {
+            Map<Integer, String> answers = adapter.getAnswersMap();
+            int correctCount = 0;
+            for (Map.Entry<Integer, String> entry : answers.entrySet()) {
+                int questionIndex = entry.getKey();
+                String userAnswer = entry.getValue();
+                String correctAnswer = questionList.get(questionIndex).getCorrectAnswer();
+                if (userAnswer.equals(correctAnswer)) {
+                    correctCount++;
+                }
+            }
+
+            processaRespostaUsuario(questionList.size(), correctCount);
+            Toast.makeText(getContext(), "Correct answers: " + correctCount + " out of " + questionList.size(), Toast.LENGTH_LONG).show();
+        });
 
         // Inicialização do Firestore e referência à coleção
         db = FirebaseFirestore.getInstance();
@@ -66,13 +91,12 @@ public class QuestionnaireFragment extends Fragment {
      */
     private void loadQuestions() {
         questionList = new ArrayList<>();
-
         getIdFromQuestion(idVideoQuestoes -> {
-            db.collection("course_form_questions").whereEqualTo("course_form_id",
-                            idVideoQuestoes)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        Log.d("myTag2", idVideoQuestoes);
+            idVideo = idVideoQuestoes;
+            verificarExistenciaRegistro(questionarioRespondido -> {
+                if(!questionarioRespondido) {
+                    db.collection("course_form_questions").whereEqualTo("course_form_id",
+                            idVideoQuestoes).get().addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
                                 questionnaireRecyclerView.setVisibility(View.VISIBLE);
@@ -80,21 +104,30 @@ public class QuestionnaireFragment extends Fragment {
                                 txtPerguntasNaoEncontradas.setVisibility(View.GONE);
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     List<String> answers = (List<String>) document.get("options");
-                                    String correctAnswer = document.getString("correct_answer");
+                                    String correctAnswer = document.getString("correct_response");
                                     questionList.add(new Question(document.getString("name"), answers, correctAnswer));
                                 }
                                 // Carregar as perguntas
                                 adapter = new QuestionnaireAdapter(questionList);
                                 questionnaireRecyclerView.setAdapter(adapter);
-                            }else{
+                            } else {
                                 questionnaireRecyclerView.setVisibility(View.GONE);
                                 btnEnviarResposta.setVisibility(View.GONE);
                                 txtPerguntasNaoEncontradas.setVisibility(View.VISIBLE);
                             }
-                        } else {
+                        }else {
                             Log.d("Error_question", "Error getting documents: ", task.getException());
                         }
+
                     });
+                }else{
+                    questionnaireRecyclerView.setVisibility(View.GONE);
+                    txtPerguntasNaoEncontradas.setText("Atividade já respondida!");
+                    txtPerguntasNaoEncontradas.setVisibility(View.VISIBLE);
+                    btnEnviarResposta.setVisibility(View.GONE);
+                }
+
+        });
         });
     }
 
@@ -105,7 +138,7 @@ public class QuestionnaireFragment extends Fragment {
 
     // Método que usa o callback para retornar o resultado assíncrono
     private void getIdFromQuestion(FirestoreCallback firestoreCallback) {
-        Log.d("myTag", courseId);
+
         db.collection("user_courses").whereEqualTo("userId", mauth.getUid())
                 .whereEqualTo("courseId", courseId)
                 .get()
@@ -122,5 +155,63 @@ public class QuestionnaireFragment extends Fragment {
                         firestoreCallback.onCallback("");
                     }
                 });
+    }
+
+    public interface FirestoreCallbackQuestion {
+        void onCallback2(Boolean questionarioRespondido);
+    }
+
+    private void verificarExistenciaRegistro(FirestoreCallbackQuestion firestoreCallback2) {
+        Log.d("britooo", courseId);
+        db.collection("user_course_result_forms").whereEqualTo("user_id", mauth.getUid())
+                .whereEqualTo("course_id", courseId).whereEqualTo("course_id_video", idVideo)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (!task.getResult().isEmpty()) {
+                            firestoreCallback2.onCallback2(true);
+                        } else {
+                            firestoreCallback2.onCallback2(false);
+                        }
+                    } else {
+                        firestoreCallback2.onCallback2(false);
+                    }
+                });
+    }
+
+    /**
+     * Método que salva as resposta do cliente
+     */
+
+    private void processaRespostaUsuario(int totalQuestoes, int totalAcertos){
+        // Cria estrutura para gravar os dados
+        Map<String, Object> result = new HashMap<>();
+        result.put("correct_questions", totalAcertos);
+        result.put("course_id", courseId);
+        result.put("questions", totalQuestoes);
+        result.put("course_id_video", idVideo);
+        result.put("user_id", mauth.getUid());
+
+        db.collection("user_course_result_forms")
+                .add(result)
+                .addOnSuccessListener(new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object documentReference) {
+                        questionnaireRecyclerView.setVisibility(View.GONE);
+                        txtPerguntasNaoEncontradas.setText("Respostas enviadas com sucesso!");
+                        txtPerguntasNaoEncontradas.setVisibility(View.VISIBLE);
+                        btnEnviarResposta.setVisibility(View.GONE);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Firestore", "Erro ao adicionar documento", e);
+                    }
+                });
+
+
+
+
     }
 }
