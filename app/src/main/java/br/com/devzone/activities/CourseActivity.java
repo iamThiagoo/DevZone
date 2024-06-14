@@ -180,7 +180,7 @@ public class CourseActivity extends AppCompatActivity {
      * Método que carrega o vídeo atual do usuário
      */
     protected void loadVideosInListView() {
-        adapter = new CourseViewAdapter(this, videos, courseId);
+        adapter = new CourseViewAdapter(this, videos, course);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
 
@@ -249,13 +249,8 @@ public class CourseActivity extends AppCompatActivity {
                                     .add(userCourseVideo)
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
-                                        public void onSuccess(DocumentReference documentReference) {// Remove o OnTouchListener do WebView
-                                            Log.d("Firestore", "Registro inserido com sucesso! Document ID: " + documentReference.getId());
-
+                                        public void onSuccess(DocumentReference documentReference) {
                                             Integer totalVideos = videos.size();
-
-                                            Log.d("Firestore", "Total de vídeos " + String.valueOf(totalVideos));
-
                                             // 2. Obtenha o número de vídeos que o usuário assistiu
                                             db.collection("user_course_videos")
                                                     .whereEqualTo("user_id", user.getUid())
@@ -331,26 +326,11 @@ public class CourseActivity extends AppCompatActivity {
         });
     }
 
-
     private void handleUserCourseCreationError(Exception exception) {
         // Lida com o erro ao criar o UserCourse
         if (exception != null) {
             exception.printStackTrace();
         }
-    }
-
-    private void handleVideoLoadingError(String errorMessage) {
-        // Lida com o erro ao carregar os vídeos
-        Log.d("Firestore", "Error loading videos: " + errorMessage);
-        Toast.makeText(getApplicationContext(), "Erro ao carregar curso", Toast.LENGTH_SHORT).show();
-        goToHomeScreen();
-    }
-
-    private void handleCourseLoadingError(String errorMessage) {
-        // Lida com o erro ao carregar o curso
-        Log.d("Firestore", "Error loading course: " + errorMessage);
-        Toast.makeText(getApplicationContext(), "Erro ao carregar curso", Toast.LENGTH_SHORT).show();
-        goToHomeScreen();
     }
 
     private void goToHomeScreen() {

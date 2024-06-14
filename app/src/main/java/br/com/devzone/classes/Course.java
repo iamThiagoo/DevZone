@@ -1,5 +1,7 @@
 package br.com.devzone.classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -14,7 +16,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class Course {
+public class Course implements Parcelable {
     private String id;
     private String nome;
     private int quantidade;
@@ -98,6 +100,16 @@ public class Course {
                 });
 
         return taskCompletionSource.getTask();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+
     }
 
     public interface OnVideosLoadedListener {

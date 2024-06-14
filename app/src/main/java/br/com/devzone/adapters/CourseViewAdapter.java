@@ -8,30 +8,30 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 
+import br.com.devzone.classes.Course;
 import br.com.devzone.classes.CourseVideo;
 import br.com.devzone.fragments.CourseVideoFragment;
-import br.com.devzone.fragments.EditProfileFragment;
 import br.com.devzone.fragments.QuestionnaireFragment;
 
 public class CourseViewAdapter extends FragmentStateAdapter {
 
     private ArrayList<CourseVideo> videos;
-    private String courseId;
+    private Course course;
 
-    public CourseViewAdapter(FragmentActivity fm, ArrayList<CourseVideo> videos, String courseId) {
+    public CourseViewAdapter(FragmentActivity fm, ArrayList<CourseVideo> videos, Course course) {
         super(fm);
         this.videos = videos;
-        this.courseId = courseId;
+        this.course = course;
     }
 
     @Override
     public Fragment createFragment(int position) {
         if (position == 0) {
             // Aulas
-            return CourseVideoFragment.newInstance(videos);
+            return CourseVideoFragment.newInstance(videos, course);
         } else {
             // Atividades
-            return new QuestionnaireFragment(courseId);
+            return new QuestionnaireFragment(course.getId());
         }
     }
 

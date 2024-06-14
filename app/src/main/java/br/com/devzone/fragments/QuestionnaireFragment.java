@@ -14,14 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import br.com.devzone.R;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import br.com.devzone.adapters.QuestionnaireAdapter;
-import br.com.devzone.classes.Question;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +21,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import br.com.devzone.R;
+import br.com.devzone.adapters.QuestionnaireAdapter;
+import br.com.devzone.classes.Question;
 
 
 public class QuestionnaireFragment extends Fragment {
@@ -74,7 +75,7 @@ public class QuestionnaireFragment extends Fragment {
             }
 
             processaRespostaUsuario(questionList.size(), correctCount);
-            Toast.makeText(getContext(), "Correct answers: " + correctCount + " out of " + questionList.size(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Respostas corretas: " + correctCount + " out of " + questionList.size(), Toast.LENGTH_LONG).show();
         });
 
         // Inicialização do Firestore e referência à coleção
