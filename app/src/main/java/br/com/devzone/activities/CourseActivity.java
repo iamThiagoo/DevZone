@@ -115,8 +115,16 @@ public class CourseActivity extends AppCompatActivity {
                                 @Override
                                 public void onUserCourseCreated(UserCourse createdUserCourse, Exception e) {
                                     if (createdUserCourse != null) {
-                                        Log.d("Firestore", "UserCourse criado");
-                                        loadCourseVideos();
+                                        loadCourseVideos().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    loadVideoInWebView(createdUserCourse);
+                                                } else {
+                                                    Log.d("loadCourseVideos", "Erro ao carregar vídeos: ", task.getException());
+                                                }
+                                            }
+                                        });
                                     } else {
                                         // Lida com o erro ao criar o UserCourse
                                         handleUserCourseCreationError(e);

@@ -11,6 +11,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserCourse {
 
     private String id;
@@ -41,7 +44,6 @@ public class UserCourse {
     }
 
     public static void createUserCourse(Course course, String userId, OnUserCourseCreatedListener listener) {
-
         CourseVideo.getCourseVideoByOrder(course, 1, new CourseVideo.OnCourseVideoLoadedListener() {
             @Override
             public void onCourseVideoLoaded(CourseVideo courseVideo) {
@@ -53,13 +55,17 @@ public class UserCourse {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 CollectionReference userCoursesRef = db.collection("user_courses");
 
-                // Crie um novo objeto UserCourse com os dados fornecidos
-                final UserCourse userCourse = new UserCourse(course.getId(), userId, courseVideo.getId());
+                Map<String, Object> userCourseData = new HashMap<>();
+                userCourseData.put("courseId", course.getId());
+                userCourseData.put("userId", userId);
+                userCourseData.put("courseVideoId", courseVideo.getId());
 
-                userCoursesRef.add(userCourse).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                // Adicione o mapa hash ao Firestore
+                userCoursesRef.add(userCourseData).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
+                            UserCourse userCourse = new UserCourse(course.getId(), userId, courseVideo.getId());
                             listener.onUserCourseCreated(userCourse, null);
                         } else {
                             listener.onUserCourseCreated(null, task.getException());
