@@ -69,22 +69,19 @@ public class CourseVideo implements Parcelable {
 
 
     public static void getCourseVideoByOrder(Course course, int order, OnCourseVideoLoadedListener listener) {
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference videosRef = db.collection("course_videos");
 
         Query query = videosRef.whereEqualTo("order", order).whereEqualTo("course_id", course.getId());
 
-        db.collection("course_videos").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot querySnapshot, @Nullable FirebaseFirestoreException e) {
-
-                DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-
                 if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                    DocumentSnapshot document = querySnapshot.getDocuments().get(0);
 
                     String videoId = document.getId();
-                    String videoName = document.getString("title");
+                    String videoName = document.getString("name");
                     Integer videoOrder = document.getLong("order").intValue();
                     String videoUri = document.getString("uri");
 
