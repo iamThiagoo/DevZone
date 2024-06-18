@@ -56,7 +56,7 @@ public class UserCourse {
                 CollectionReference userCoursesRef = db.collection("user_courses");
 
                 Map<String, Object> userCourseData = new HashMap<>();
-                userCourseData.put("courseId", course.getId());
+                userCourseData.put("currentCourseVideoId", course.getId());
                 userCourseData.put("userId", userId);
                 userCourseData.put("courseVideoId", courseVideo.getId());
 
